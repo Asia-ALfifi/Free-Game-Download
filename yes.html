@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Game Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+           background-image: url('p2.png'); /* استبدل 'your-image.jpg' بمسار صورتك */
+            background-size: cover; /* يجعل الصورة تغطي كامل الشاشة */
+            background-position: center; /* يركز الصورة في المنتصف */
+            background-repeat: no-repeat; /* يمنع تكرار الصورة */
+            height: 100vh; /* يجعل الجسم يغطي كامل ارتفاع الشاشة */
+            width: 100%; 
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #ff5733;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .countdown {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+        label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block;
+        }
+        .hacker-panel {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #222;
+            color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+        .hacker-panel h2 {
+            color: #ff5733;
+        }
+        .hacker-panel table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .hacker-panel table, .hacker-panel th, .hacker-panel td {
+            border: 1px solid #555;
+        }
+        .hacker-panel th, .hacker-panel td {
+            padding: 10px;
+            text-align: left;
+        }
+        .hacker-panel th {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div id="victim-page">
+        <div class="header">
+            <h1>Download Your Favorite Game Now!</h1>
+            <p>Hurry! Limited copies available!</p>
+        </div>
+        <div class="container">
+            <h2>Exclusive Offer!</h2>
+            <p class="countdown">Only 3 copies left! Offer expires in: <span id="timer">00:05:00</span></p>
+            <button class="btn" onclick="showForm()">Download Now</button>
+            <div id="form-section" style="display:none;">
+                <h3>Fill in your details to claim your free game:</h3>
+                <form onsubmit="captureData(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="id">ID Number:</label>
+                        <input type="text" id="id" name="id" placeholder="Enter your ID number">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="text" id="phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <button class="btn" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="hacker-page" style="display:none;">
+        <div class="hacker-panel">
+            <h2>Hacker Control Panel</h2>
+            <p>Below is the data captured from users:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>ID Number</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody id="user-data">
+                    <!-- Captured data will appear here -->
+                </tbody>
+            </table>
+            <button class="btn" onclick="showVictimPage()">Back to Victim Page</button>
+        </div>
+    </div>
+
+    <script>
+        function showForm() {
+            document.getElementById('form-section').style.display = 'block';
+        }
+
+        let timeLeft = 300; // 5 minutes in seconds
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                clearInterval(timerInterval);
+                timerElement.textContent = "Offer expired!";
+            }
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        function captureData(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const id = document.getElementById('id').value;
+            const phone = document.getElementById('phone').value;
+
+            const table = document.getElementById('user-data');
+            const row = table.insertRow();
+            row.insertCell(0).textContent = name;
+            row.insertCell(1).textContent = id;
+            row.insertCell(2).textContent = phone;
+
+            alert('Data submitted successfully!');
+            showHackerPage();
+        }
+
+        function showHackerPage() {
+            document.getElementById('victim-page').style.display = 'none';
+            document.getElementById('hacker-page').style.display = 'block';
+        }
+
+        function showVictimPage() {
+            document.getElementById('hacker-page').style.display = 'none';
+            document.getElementById('victim-page').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
